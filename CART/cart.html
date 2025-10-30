@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="bg-gray-100">
+    <section class="h-screen py-12 sm:py-16 lg:py-20">
+      <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
+        <div class="flex items-center justify-between mb-6">
+          <h1 class="text-2xl font-semibold text-gray-900">Your Cart</h1>
+          <button id="add-item" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition-all">Add Item</button>
+        </div>
+
+        <ul id="product-list" class="space-y-4">
+          <!-- المنتجات تولد هنا -->
+        </ul>
+
+        <div class="mt-6 border-t border-b py-2">
+          <div class="flex items-center justify-between">
+            <p class="text-sm text-gray-400">Subtotal</p>
+            <p id="subtotal" class="text-lg font-semibold text-gray-900">$0.00</p>
+          </div>
+          <div class="flex items-center justify-between">
+            <p class="text-sm text-gray-400">Shipping</p>
+            <p id="shipping-price" class="text-lg font-semibold text-gray-900">$0.00</p>
+          </div>
+        </div>
+        <div class="mt-6 flex items-center justify-between">
+          <p class="text-sm font-medium text-gray-900">Total</p>
+          <p id="total" class="text-2xl font-semibold text-gray-900">$0.00</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Popup -->
+    <div id="popup" class="hidden fixed inset-0 bg-white/50 backdrop-blur-md flex items-center justify-center">
+      <div class="bg-white max-w-lg p-8 rounded-md shadow-lg text-center">
+        <p class="text-xl font-bold text-red-600">Order Count Exceeded</p>
+        <p class="mt-2 text-gray-700">You have maxed out the limit of the order</p>
+        <button onclick="hidePopover()" class="mt-6 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md">Ok</button>
+      </div>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
