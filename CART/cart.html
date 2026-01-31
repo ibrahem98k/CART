@@ -1,73 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Shopping Cart</title>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Premium shopping cart with modern UI/UX design" />
+  <title>Premium Shopping Cart - Best Shopping Experience</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="bg-gray-100">
-<section class="h-screen py-12 sm:py-16 lg:py-20">
-<div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
-<div class="flex items-center justify-between mb-6">
-<h1 class="text-2xl font-semibold text-gray-900">Your Cart</h1>
-<button id="add-item" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition-all">Add Item</button>
-</div>
-<ul id="product-list" class="space-y-4"></ul>
-<div class="mt-6 border-t border-b py-2">
-<div class="flex items-center justify-between">
-<p class="text-sm text-gray-400">Subtotal</p>
-<p id="subtotal" class="text-lg font-semibold text-gray-900">$0.00</p>
-</div>
-<div class="flex items-center justify-between">
-<p class="text-sm text-gray-400">Shipping</p>
-<p id="shipping-price" class="text-lg font-semibold text-gray-900">$0.00</p>
-</div>
-</div>
-<div class="mt-6 flex items-center justify-between">
-<p class="text-sm font-medium text-gray-900">Total</p>
-<p id="total" class="text-2xl font-semibold text-gray-900">$0.00</p>
-</div>
-<div id="promo-container" class="mt-4 bg-white p-4 rounded-md shadow-sm">
-<div class="flex items-center gap-2 mb-2">
-<input id="promo-input" type="text" placeholder="Enter promo code" class="border px-3 py-1 rounded-md text-sm w-40" />
-<button id="apply-promo" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm">Apply</button>
-<p id="promo-feedback" class="text-sm text-red-600 ml-3"></p>
-</div>
-<p id="promo-display" class="text-sm text-gray-600"></p>
-</div>
-<div class="mt-6">
-<button id="checkout-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg font-bold transition-all">Checkout</button>
-</div>
-</div>
-</section>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">🛍️ ShopLux</div>
+      <div class="cart-badge">
+        <span>Cart</span>
+        <span class="cart-count" id="cart-count">0</span>
+      </div>
+    </div>
+  </header>
 
-<div id="addItemPopup" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center">
-<div class="bg-white w-[90%] max-w-md p-6 rounded-lg shadow-lg">
-<h2 class="text-xl font-bold mb-4 text-gray-800">Add / Edit Item</h2>
-<div class="space-y-3">
-<input id="itemName" type="text" placeholder="Item Name" class="w-full border px-3 py-2 rounded-md" />
-<input id="itemImage" type="text" placeholder="Image URL" class="w-full border px-3 py-2 rounded-md" />
-<input id="itemPrice" type="number" placeholder="Price ($)" class="w-full border px-3 py-2 rounded-md" />
-<input id="itemQuantity" type="number" placeholder="Quantity" class="w-full border px-3 py-2 rounded-md" />
-<input id="itemStock" type="number" placeholder="Stock" class="w-full border px-3 py-2 rounded-md" />
-<textarea id="itemDescription" placeholder="Description" class="w-full border px-3 py-2 rounded-md"></textarea>
-</div>
-<div class="mt-5 flex justify-end space-x-3">
-<button id="cancelAdd" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md">Cancel</button>
-<button id="confirmAdd" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">Add</button>
-</div>
-</div>
-</div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Your Premium Cart</h1>
+      <p>Experience the finest shopping journey with our curated selection</p>
+    </div>
+  </section>
 
-<div id="stockPopup" class="hidden fixed inset-0 bg-black/30 flex items-center justify-center">
-<div class="bg-white p-6 rounded-md shadow-lg text-center">
-<p id="stockMessage" class="text-red-600 font-bold"></p>
-<button onclick="closeStockPopup()" class="mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md">Ok</button>
-</div>
-</div>
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
 
-<script src="index.js"></script>
+  <!-- Main Content -->
+  <div class="main-container">
+    <!-- Cart Items -->
+    <div class="cart-section">
+      <div class="glass-card">
+        <div class="section-header">
+          <h2 class="section-title">Shopping Bag</h2>
+          <button id="add-item" class="btn btn-primary">
+            <span>➕</span>
+            <span>Add Item</span>
+          </button>
+        </div>
+
+        <!-- Product List -->
+        <div id="product-list"></div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="empty-state hidden">
+          <div class="empty-icon">🛒</div>
+          <h3 class="empty-title">Your cart is empty</h3>
+          <p class="empty-description">Add some amazing products to get started!</p>
+          <button class="btn btn-primary" onclick="document.getElementById('add-item').click()">
+            Start Shopping
+          </button>
+        </div>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="recommendations glass-card" id="recommendations">
+        <div class="section-header">
+          <h2 class="section-title">You Might Also Like</h2>
+        </div>
+        <div class="recommendation-grid" id="recommendation-grid"></div>
+      </div>
+    </div>
+
+    <!-- Summary Panel -->
+    <aside class="summary-panel">
+      <div class="glass-card">
+        <h3 class="section-title">Order Summary</h3>
+        
+        <!-- Price Breakdown -->
+        <div class="price-row">
+          <span class="price-label">Subtotal</span>
+          <span class="price-value" id="subtotal">$0.00</span>
+        </div>
+        
+        <div class="price-row">
+          <span class="price-label">Shipping</span>
+          <span class="price-value" id="shipping-price">$0.00</span>
+        </div>
+
+        <div class="price-row" id="discount-row" style="display: none;">
+          <span class="price-label">Discount</span>
+          <span class="price-value" id="discount-amount" style="color: #10b981;">-$0.00</span>
+        </div>
+
+        <div class="price-row total-row">
+          <span class="price-label">Total</span>
+          <span class="price-value" id="total">$0.00</span>
+        </div>
+
+        <!-- Promo Code Section -->
+        <div class="promo-section">
+          <div class="promo-input-group">
+            <input 
+              id="promo-input" 
+              type="text" 
+              placeholder="Enter promo code"
+              class="promo-input"
+            />
+            <button id="apply-promo" class="btn btn-success">Apply</button>
+          </div>
+          <p id="promo-feedback" class="promo-feedback"></p>
+          <div id="promo-display" class="promo-display" style="display: none;"></div>
+        </div>
+
+        <!-- Checkout Button -->
+        <button id="checkout-btn" class="btn btn-primary w-full mt-4">
+          <span>🔒</span>
+          <span>Secure Checkout</span>
+        </button>
+
+        <!-- Security Badges -->
+        <div style="text-align: center; margin-top: 1rem; color: var(--text-secondary); font-size: 0.75rem;">
+          🔒 Secure Payment • 🚚 Free Returns • ⚡ Fast Shipping
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Add/Edit Item Modal -->
+  <div id="addItemPopup" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">✨ Add New Item</h2>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Item Name</label>
+          <input id="itemName" type="text" placeholder="e.g., Nike Air Max" class="form-input" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Image URL</label>
+          <input id="itemImage" type="text" placeholder="https://..." class="form-input" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Price ($)</label>
+          <input id="itemPrice" type="number" placeholder="99.99" class="form-input" step="0.01" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Quantity</label>
+          <input id="itemQuantity" type="number" placeholder="1" class="form-input" min="1" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Stock Available</label>
+          <input id="itemStock" type="number" placeholder="10" class="form-input" min="1" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description (Optional)</label>
+          <textarea id="itemDescription" placeholder="Brief description..." class="form-textarea"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelAdd" class="btn btn-outline">Cancel</button>
+        <button id="confirmAdd" class="btn btn-primary">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stock Warning Modal -->
+  <div id="stockPopup" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">⚠️ Stock Limit Reached</h2>
+      </div>
+      <div class="modal-body">
+        <p id="stockMessage" style="color: var(--text-secondary); text-align: center;"></p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="closeStockPopup()" class="btn btn-danger">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-link">Terms of Service</a>
+        <a href="#" class="footer-link">Shipping Info</a>
+        <a href="#" class="footer-link">Returns</a>
+        <a href="#" class="footer-link">Contact Us</a>
+      </div>
+      <p class="footer-copyright">
+        © 2026 ShopLux Premium Cart. All rights reserved. Made with ❤️
+      </p>
+    </div>
+  </footer>
+
+  <script src="index.js"></script>
 </body>
 </html>
-
